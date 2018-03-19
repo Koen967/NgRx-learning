@@ -9,6 +9,6 @@ export const reducers: ActionReducerMap<QuestionFlowAppState> = {
   questionFlow: fromQuestionFlow.questionFlowReducer
 };
 
-export const getquestionFlowAppState = createFeatureSelector<
+export const getQuestionFlowAppState = createFeatureSelector<
   QuestionFlowAppState
 >('questionFlow');

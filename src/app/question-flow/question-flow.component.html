@@ -1,3 +1,11 @@
-<p>
-  question-flow works!
-</p>
+<div class="row">
+  <div class="col">
+    <app-sections [sections]="sections$ | async"></app-sections>
+  </div>
+  <div class="col">
+    <app-questions></app-questions>
+  </div>
+  <div class="col">
+    <app-question-form></app-question-form>
+  </div>
+</div>
