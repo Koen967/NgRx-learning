@@ -1,53 +1,31 @@
 import { Action } from '@ngrx/store';
-import { ContractDetail } from '../../contract-details.model';
+import { QuestionFlow } from '../../contract-details.model';
 
-export const GET_CONTRACT_DETAILS = '[CONTRACT_DETAILS] GET CONTRACT DETAILS';
-export const GET_CONTRACT_DETAILS_SUCCES =
-  '[CONTRACT_DETAILS] GET CONTRACT DETAILS SUCCES';
-export const GET_CONTRACT_DETAILS_FAILED =
-  '[CONTRACT_DETAILS] GET CONTRACT DETAILS FAILED';
-export const GET_CONTRACT_DETAIL = '[CONTRACT_DETAIL] GET CONTRACT DETAIL';
-export const GET_CONTRACT_DETAIL_SUCCES =
-  '[CONTRACT DETAIL] GET CONTRACT DETAIL SUCCES';
-export const GET_CONTRACT_DETAIL_FAILED =
-  '[CONTRACT DETAIL] GET CONTRACT DETAIL FAILED';
+export const GET_QUESTION_FLOW = '[QUESTION_FLOW] GET QUESTION_FLOW';
+export const GET_QUESTION_FLOW_SUCCES =
+  '[QUESTION_FLOW] GET QUESTION_FLOW SUCCES';
+export const GET_QUESTION_FLOW_FAILED =
+  '[QUESTION_FLOW] GET QUESTION_FLOW FAILED';
 
-export class GetContractDetails implements Action {
-  readonly type = GET_CONTRACT_DETAILS;
+export class GetQuestionFlows implements Action {
+  readonly type = GET_QUESTION_FLOW;
+
+  constructor(public questionFlowId: number) {}
 }
 
-export class GetContractDetailsSucces implements Action {
-  readonly type = GET_CONTRACT_DETAILS_SUCCES;
+export class GetQuestionFlowsSucces implements Action {
+  readonly type = GET_QUESTION_FLOW_SUCCES;
 
-  constructor(public contractDetails: ContractDetail[]) {}
+  constructor(public sections: QuestionFlow[]) {}
 }
 
-export class GetContractDetailsFailed implements Action {
-  readonly type = GET_CONTRACT_DETAILS_FAILED;
-
-  constructor(public error: any) {}
-}
-
-export class GetContractDetail implements Action {
-  readonly type = GET_CONTRACT_DETAILS;
-}
-
-export class GetContractDetailSucces implements Action {
-  readonly type = GET_CONTRACT_DETAILS_SUCCES;
-
-  constructor(public contractDetail: ContractDetail) {}
-}
-
-export class GetContractDetailFailed implements Action {
-  readonly type = GET_CONTRACT_DETAILS_FAILED;
+export class GetQuestionFlowsFailed implements Action {
+  readonly type = GET_QUESTION_FLOW_FAILED;
 
   constructor(public error: any) {}
 }
 
 export type QuestionFlowActionsAll =
-  | GetContractDetails
-  | GetContractDetailsSucces
-  | GetContractDetailsFailed
-  | GetContractDetail
-  | GetContractDetailSucces
-  | GetContractDetailFailed;
+  | GetQuestionFlows
+  | GetQuestionFlowsSucces
+  | GetQuestionFlowsFailed;

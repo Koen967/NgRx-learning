@@ -15,14 +15,14 @@ import { effects } from './store/effects';
 import { SectionsComponent } from './sections/sections.component';
 import { QuestionsComponent } from './questions/questions.component';
 import { QuestionFormComponent } from './question-form/question-form.component';
+import { ContractDetailStoreModule } from './store/store.module';
 
 @NgModule({
   imports: [
     CommonModule,
     HttpClientModule,
     QuestionFlowRoutingModule,
-    StoreModule.forFeature('questionFlow', reducers),
-    EffectsModule.forFeature(effects)
+    ContractDetailStoreModule
   ],
   declarations: [
     QuestionFlowComponent,

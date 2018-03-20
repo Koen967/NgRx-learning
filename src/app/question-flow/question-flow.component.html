@@ -1,11 +1,11 @@
-<div class="row">
-  <div class="col">
-    <app-sections [sections]="sections$ | async"></app-sections>
+<div class="row border">
+  <div class="col border">
+    <app-sections [contractDetails]="contractDetails$ | async" (onQuestionFlowOpen)="questionFlowsOpen($section)"></app-sections>
   </div>
-  <div class="col">
-    <app-questions></app-questions>
+  <div class="col border">
+    <app-questions [section]="section$ | async"></app-questions>
   </div>
-  <div class="col">
+  <div class="col border">
     <app-question-form></app-question-form>
   </div>
 </div>
