@@ -2,8 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 
 import * as fromStore from './store';
-import { ContractDetail, QuestionFlow } from './contract-details.model';
+import {
+  ContractDetail,
+  QuestionFlow,
+  Section
+} from './contract-details.model';
 import { Observable } from 'rxjs/Observable';
+import { of } from 'rxjs/observable/of';
 
 @Component({
   selector: 'app-question-flow',
@@ -12,7 +17,8 @@ import { Observable } from 'rxjs/Observable';
 })
 export class QuestionFlowComponent implements OnInit {
   contractDetails$: Observable<ContractDetail>;
-  section$: Observable<QuestionFlow>;
+  questionFlows$: Observable<QuestionFlow[]>;
+  questionFlow$: Observable<QuestionFlow>;
 
   constructor(private store: Store<fromStore.ContractDetailsAppState>) {}
 
@@ -20,7 +26,16 @@ export class QuestionFlowComponent implements OnInit {
     this.contractDetails$ = this.store.select(fromStore.getContractDetails);
   }
 
-  onQuestionFlowOpen(section: Observable<QuestionFlow>) {
-    this.section$ = section;
+  onQuestionFlowOpen(section: Section) {
+    this.questionFlows$ = of(section.questionFlows);
+  }
+
+  onQuestionFlowFormOpen(questionFlow: QuestionFlow) {
+    this.questionFlow$ = of(questionFlow);
+    console.log(questionFlow);
+  }
+
+  onSetQuestionFlowAnswer(answer: any) {
+    this.store.dispatch(new fromStore.UpdateQuestionFlow(answer));
   }
 }

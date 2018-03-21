@@ -6,6 +6,7 @@ export const GET_CONTRACT_DETAILS_SUCCES =
   '[CONTRACT_DETAILS] GET CONTRACT DETAILS SUCCES';
 export const GET_CONTRACT_DETAILS_FAILED =
   '[CONTRACT_DETAILS] GET CONTRACT DETAILS FAILED';
+export const UPDATE_QUESTION_FLOW = '[QUESTION_FLOW] UPDATE QUESTION FLOW';
 
 export class GetContractDetails implements Action {
   readonly type = GET_CONTRACT_DETAILS;
@@ -25,7 +26,14 @@ export class GetContractDetailsFailed implements Action {
   constructor(public error: any) {}
 }
 
+export class UpdateQuestionFlow implements Action {
+  readonly type = UPDATE_QUESTION_FLOW;
+
+  constructor(public questionFlow: any) {}
+}
+
 export type ContractDetailsActionsAll =
   | GetContractDetails
   | GetContractDetailsSucces
-  | GetContractDetailsFailed;
+  | GetContractDetailsFailed
+  | UpdateQuestionFlow;

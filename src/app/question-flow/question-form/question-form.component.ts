@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { QuestionFlow } from '../contract-details.model';
 
 @Component({
   selector: 'app-question-form',
@@ -6,10 +7,22 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./question-form.component.css']
 })
 export class QuestionFormComponent implements OnInit {
+  @Input() questionFlow: QuestionFlow;
 
-  constructor() { }
+  @Output() setQuestionFlowAnswer = new EventEmitter<Object>();
 
-  ngOnInit() {
+  constructor() {}
+
+  ngOnInit() {}
+
+  setAnswer(form: any) {
+    const answer = {
+      id: this.questionFlow.id,
+      answer: form.choice
+    };
+    console.log(answer);
+    /* const newQuestionFlow: QuestionFlow = Object.assign({}, this.questionFlow);
+    newQuestionFlow.answer = form.choice; */
+    this.setQuestionFlowAnswer.emit(answer);
   }
-
 }

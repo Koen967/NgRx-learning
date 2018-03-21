@@ -1,11 +1,11 @@
-<div class="row border">
-  <div class="col border">
-    <app-sections [contractDetails]="contractDetails$ | async" (onQuestionFlowOpen)="questionFlowsOpen($section)"></app-sections>
+<div class="row border" style="height:85vh">
+  <div class="col border" style="overflow:auto">
+    <app-sections [contractDetails]="contractDetails$ | async" (questionFlowsOpen)="onQuestionFlowOpen($event)"></app-sections>
   </div>
-  <div class="col border">
-    <app-questions [section]="section$ | async"></app-questions>
+  <div class="col border" style="overflow:auto">
+    <app-questions [questionFlows]="questionFlows$ | async" (questionFlowFormOpen)="onQuestionFlowFormOpen($event)"></app-questions>
   </div>
-  <div class="col border">
-    <app-question-form></app-question-form>
+  <div class="col border" style="overflow:auto">
+    <app-question-form [questionFlow]="questionFlow$ | async" (setQuestionFlowAnswer)="onSetQuestionFlowAnswer($event)"></app-question-form>
   </div>
 </div>

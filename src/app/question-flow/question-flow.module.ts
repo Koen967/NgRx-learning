@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Routes, RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 
@@ -21,6 +22,7 @@ import { ContractDetailStoreModule } from './store/store.module';
   imports: [
     CommonModule,
     HttpClientModule,
+    FormsModule,
     QuestionFlowRoutingModule,
     ContractDetailStoreModule
   ],

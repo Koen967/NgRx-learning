@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Section, QuestionFlow } from '../contract-details.model';
 
 @Component({
@@ -7,15 +7,15 @@ import { Section, QuestionFlow } from '../contract-details.model';
   styleUrls: ['./questions.component.css']
 })
 export class QuestionsComponent implements OnInit {
-  @Input() section: Section;
+  @Input() questionFlows: QuestionFlow[];
 
-  questionFlows: QuestionFlow[];
+  @Output() questionFlowFormOpen = new EventEmitter<QuestionFlow>();
 
   constructor() {}
 
-  ngOnInit() {
-    if (this.section) {
-      this.questionFlows = this.section.questionFlows;
-    }
+  ngOnInit() {}
+
+  openQuestionFlowForm(questionFlow: QuestionFlow) {
+    this.questionFlowFormOpen.emit(questionFlow);
   }
 }
