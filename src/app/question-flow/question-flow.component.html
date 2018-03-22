@@ -1,6 +1,6 @@
 <div class="row border" style="height:85vh">
   <div class="col border" style="overflow:auto">
-    <app-sections [contractDetails]="contractDetails$ | async" (questionFlowsOpen)="onQuestionFlowOpen($event)"></app-sections>
+    <app-sections [sections]="sections$ | async" (questionFlowsOpen)="onQuestionFlowOpen($event)"></app-sections>
   </div>
   <div class="col border" style="overflow:auto">
     <app-questions [questionFlows]="questionFlows$ | async" (questionFlowFormOpen)="onQuestionFlowFormOpen($event)"></app-questions>

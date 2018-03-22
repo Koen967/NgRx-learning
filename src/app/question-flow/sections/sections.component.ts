@@ -7,20 +7,15 @@ import { Section, ContractDetail } from '../contract-details.model';
   styleUrls: ['./sections.component.css']
 })
 export class SectionsComponent implements OnInit {
-  @Input() contractDetails: ContractDetail;
+  @Input() sections: Section[];
 
   @Output() questionFlowsOpen = new EventEmitter<Section>();
 
-  sections: Section[];
-
   constructor() {}
 
-  ngOnInit() {
-    this.sections = this.contractDetails.sections;
-  }
+  ngOnInit() {}
 
   openQuestionFlows(section: Section) {
     this.questionFlowsOpen.emit(section);
-    console.log(section);
   }
 }

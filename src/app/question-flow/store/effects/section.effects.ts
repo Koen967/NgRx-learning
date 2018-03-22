@@ -3,7 +3,7 @@ import { Effect, Actions } from '@ngrx/effects';
 import { map, switchMap, catchError } from 'rxjs/operators';
 import { of } from 'rxjs/observable/of';
 
-import * as SectionActions from '../actions';
+import * as StateActions from '../actions';
 import * as fromServices from '../../question-flow.service';
 import { Observable } from 'rxjs/Observable';
 

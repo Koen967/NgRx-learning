@@ -1,3 +1,4 @@
+import { normalize, schema } from 'normalizr';
 export class ContractDetail {
   id: number;
   customerId: number;
@@ -9,7 +10,7 @@ export class ContractDetail {
   defaultCurrencyId: number;
   totalQuestions: number;
   completedQuestions: number;
-  sections: Section[];
+  sections: number[];
   parentSections: ParentSection[];
   revisions: Revision[];
 }
@@ -22,7 +23,7 @@ export class Section {
   totalQuestions: number;
   completedQuestions: number;
   selected: boolean;
-  questionFlows: QuestionFlow[];
+  questionFlows: number[];
 }
 
 export class QuestionFlow {
@@ -48,7 +49,7 @@ export class QuestionFlow {
   companyDefaultCurrency: any;
   dropdownValues: any;
   unitOfMeasurement: string;
-  questionFlows: QuestionFlow[];
+  questionFlows: number[];
   exceptions: Exception[];
   useCompanyDefault: boolean;
   reviewedReason: any;
@@ -88,3 +89,23 @@ export class Revision {
   validUntill: Date;
   active: boolean;
 }
+
+/*  Normalizr
+    Use const normalizedData = normalize(ContractDetails, contractDetailsSchema);
+    to get a normalized contractDetails JSON Object.
+*/
+const questionFlowSchema = new schema.Entity('questionFlows');
+
+const questionFlowsSchema = new schema.Array(questionFlowSchema);
+
+questionFlowSchema.define({ questionFlows: questionFlowsSchema });
+
+const sectionSchema = new schema.Entity('sections', {
+  questionFlows: questionFlowsSchema
+});
+
+const sectionsSchema = new schema.Array(sectionSchema);
+
+export const contractDetailsSchema = new schema.Entity('contractDetails', {
+  sections: sectionsSchema
+});

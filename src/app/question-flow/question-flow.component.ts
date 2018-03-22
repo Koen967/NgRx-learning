@@ -16,18 +16,23 @@ import { of } from 'rxjs/observable/of';
   styleUrls: ['./question-flow.component.css']
 })
 export class QuestionFlowComponent implements OnInit {
-  contractDetails$: Observable<ContractDetail>;
-  questionFlows$: Observable<QuestionFlow[]>;
+  sections$: Observable<Section[]>;
+  questionFlows$: Observable<number[]>;
   questionFlow$: Observable<QuestionFlow>;
 
   constructor(private store: Store<fromStore.ContractDetailsAppState>) {}
 
   ngOnInit() {
-    this.contractDetails$ = this.store.select(fromStore.getContractDetails);
+    this.sections$ = this.store.select(
+      fromStore.getSectionsFromCurrentContractDetails
+    );
   }
 
   onQuestionFlowOpen(section: Section) {
-    this.questionFlows$ = of(section.questionFlows);
+    /* this.store.dispatch(new fromStore.setCurrentSection(section));
+    this.questionFlows$ = this.store.select(
+      fromStore.getQuestionFlowsFromCurrentSection
+    ); */
   }
 
   onQuestionFlowFormOpen(questionFlow: QuestionFlow) {

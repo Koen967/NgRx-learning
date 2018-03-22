@@ -4,12 +4,12 @@ import { Routes, RouterModule } from '@angular/router';
 
 export const ROUTES: Routes = [
   {
-    path: 'questionFlow',
+    path: 'contractDetails/:id',
     loadChildren: './question-flow/question-flow.module#QuestionFlowModule'
   },
   {
     path: '**',
-    redirectTo: '/questionFlow'
+    redirectTo: '/contractDetails/9292'
   }
 ];
 

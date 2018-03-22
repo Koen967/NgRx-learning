@@ -3,10 +3,12 @@ import { ContractDetail, QuestionFlow } from '../../contract-details.model';
 
 export interface QuestionFlowState {
   questionFlow: { [key: string]: QuestionFlow };
+  childQuestionFlows: number[];
 }
 
 export const questionFlowInitialState: QuestionFlowState = {
-  questionFlow: {}
+  questionFlow: {},
+  childQuestionFlows: []
 };
 
 export function questionFlowReducer(
@@ -20,3 +22,5 @@ export function questionFlowReducer(
 }
 
 export const getQuestionFlow = (state: QuestionFlowState) => state.questionFlow;
+export const getChildQuestionFlows = (state: QuestionFlowState) =>
+  state.childQuestionFlows;

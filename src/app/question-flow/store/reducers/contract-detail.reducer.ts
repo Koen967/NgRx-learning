@@ -1,15 +1,20 @@
 import * as ContractDetailsActions from '../actions/contract-details.actions';
-import { ContractDetail, QuestionFlow } from '../../contract-details.model';
+import {
+  ContractDetail,
+  QuestionFlow,
+  contractDetailsSchema
+} from '../../contract-details.model';
+import { normalize } from 'normalizr';
 
 export interface ContractDetailState {
-  contractDetails: ContractDetail;
-  sections: number[];
+  contractDetails: { [id: number]: ContractDetail };
+  sections: string[];
   loaded: boolean;
   loading: boolean;
 }
 
 export const contractDetailsInitialState: ContractDetailState = {
-  contractDetails: null,
+  contractDetails: {},
   sections: [],
   loaded: false,
   loading: false
@@ -33,9 +38,13 @@ export function contractDetailReducer(
       };
     }
     case ContractDetailsActions.GET_CONTRACT_DETAILS_SUCCES: {
+      const normalizedData = normalize(
+        action.contractDetails,
+        contractDetailsSchema
+      );
       return {
         ...state,
-        contractDetails: action.contractDetails,
+        contractDetails: normalizedData.entities.contractDetails,
         loaded: true,
         loading: false
       };
