@@ -1,26 +1,68 @@
-import * as QuestionFlowActions from '../actions/section.actions';
-import { ContractDetail, QuestionFlow } from '../../contract-details.model';
+import * as QuestionFlowActions from '../actions/question-flow.actions';
+import * as ContractDetailActions from '../actions/contract-details.actions';
+import {
+  ContractDetail,
+  QuestionFlow,
+  contractDetailsSchema
+} from '../../contract-details.model';
+import { normalize } from 'normalizr';
 
 export interface QuestionFlowState {
-  questionFlow: { [key: string]: QuestionFlow };
+  questionFlows: { [key: string]: QuestionFlow };
+  currentQuestionFlow: QuestionFlow;
   childQuestionFlows: number[];
 }
 
 export const questionFlowInitialState: QuestionFlowState = {
-  questionFlow: {},
+  questionFlows: {},
+  currentQuestionFlow: null,
   childQuestionFlows: []
 };
 
 export function questionFlowReducer(
   state = questionFlowInitialState,
-  action: QuestionFlowActions.SectionActionsAll
+  action:
+    | QuestionFlowActions.QuestionFlowActionsAll
+    | ContractDetailActions.ContractDetailsActionsAll
 ): QuestionFlowState {
   switch (action.type) {
+    case ContractDetailActions.GET_CONTRACT_DETAILS_SUCCES: {
+      const normalizedData = normalize(
+        action.contractDetails,
+        contractDetailsSchema
+      );
+      return {
+        ...state,
+        questionFlows: normalizedData.entities.questionFlows
+      };
+    }
+    case QuestionFlowActions.SET_CURRENT_QUESTION_FLOW: {
+      return {
+        ...state,
+        currentQuestionFlow: action.questionFlow
+      };
+    }
+    case QuestionFlowActions.SET_ANSWER: {
+      return {
+        ...state,
+        questionFlows: {
+          ...state.questionFlows,
+          [action.answer.id]: {
+            ...state.questionFlows[action.answer.id],
+            answer: action.answer.answer,
+            completed: (action.answer = true)
+          }
+        }
+      };
+    }
     default:
       return state;
   }
 }
 
-export const getQuestionFlow = (state: QuestionFlowState) => state.questionFlow;
+export const getQuestionFlows = (state: QuestionFlowState) =>
+  state.questionFlows;
+export const getCurrentQuestionFlow = (state: QuestionFlowState) =>
+  state.currentQuestionFlow;
 export const getChildQuestionFlows = (state: QuestionFlowState) =>
   state.childQuestionFlows;

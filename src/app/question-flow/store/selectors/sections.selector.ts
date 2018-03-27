@@ -32,3 +32,8 @@ export const getSectionsFromCurrentContractDetails = createSelector(
 export const getSectionsArray = createSelector(getSections, sections => {
   return Object.keys(sections).map(id => sections[id]);
 });
+
+export const getCurrentSection = createSelector(
+  getSectionsState,
+  fromSections.getCurrentSection
+);

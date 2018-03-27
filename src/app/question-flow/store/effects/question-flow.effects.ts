@@ -13,4 +13,11 @@ export class QuestionFlowEffects {
     private actions$: Actions,
     private questionFlowService: fromServices.QuestionFlowService
   ) {}
+
+  @Effect()
+  contractDetails$: Observable<
+    QuestionFlowActions.QuestionFlowActionsAll
+  > = this.actions$
+    .ofType<QuestionFlowActions.SetAnswer>(QuestionFlowActions.SET_ANSWER)
+    .pipe();
 }

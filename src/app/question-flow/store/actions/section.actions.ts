@@ -1,9 +1,10 @@
 import { Action } from '@ngrx/store';
-import { QuestionFlow } from '../../contract-details.model';
+import { QuestionFlow, Section } from '../../contract-details.model';
 
 export const GET_SECTION = '[SECTION] GET SECTION';
 export const GET_SECTION_SUCCES = '[SECTION] GET SECTION SUCCES';
 export const GET_SECTION_FAILED = '[SECTION] GET SECTION FAILED';
+export const SET_CURRENT_SECTION = '[SECTION] SET CURRENT SECTION';
 
 export class GetSections implements Action {
   readonly type = GET_SECTION;
@@ -14,7 +15,7 @@ export class GetSections implements Action {
 export class GetSectionsSucces implements Action {
   readonly type = GET_SECTION_SUCCES;
 
-  constructor(public sections: QuestionFlow[]) {}
+  constructor(public sections: Section[]) {}
 }
 
 export class GetSectionsFailed implements Action {
@@ -23,7 +24,14 @@ export class GetSectionsFailed implements Action {
   constructor(public error: any) {}
 }
 
+export class SetCurrentSection implements Action {
+  readonly type = SET_CURRENT_SECTION;
+
+  constructor(public section: Section) {}
+}
+
 export type SectionActionsAll =
   | GetSections
   | GetSectionsSucces
-  | GetSectionsFailed;
+  | GetSectionsFailed
+  | SetCurrentSection;

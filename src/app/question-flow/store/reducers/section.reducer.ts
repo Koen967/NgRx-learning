@@ -5,11 +5,13 @@ import { normalize } from 'normalizr';
 
 export interface SectionState {
   sections: { [key: string]: Section };
+  currentSection: Section;
   questionFlows: string[];
 }
 
 export const sectionInitialState: SectionState = {
   sections: {},
+  currentSection: null,
   questionFlows: []
 };
 
@@ -30,10 +32,17 @@ export function sectionReducer(
         sections: normalizedData.entities.sections
       };
     }
+    case SectionActions.SET_CURRENT_SECTION: {
+      return {
+        ...state,
+        currentSection: action.section
+      };
+    }
     default:
       return state;
   }
 }
 
 export const getSections = (state: SectionState) => state.sections;
+export const getCurrentSection = (state: SectionState) => state.currentSection;
 export const getQuestionFlows = (state: SectionState) => state.questionFlows;
