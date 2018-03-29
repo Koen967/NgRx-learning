@@ -21,6 +21,8 @@ export class QuestionFlowComponent implements OnInit {
   questionFlows$: Observable<QuestionFlow[]>;
   parentFlows$: Observable<QuestionFlow[]>;
   questionFlow$: Observable<QuestionFlow>;
+  currentSection$: Observable<Section>;
+  currentQuestionFlow$: Observable<QuestionFlow>;
 
   currentSection: Section;
   currentQuestionFlow: QuestionFlow;
@@ -32,15 +34,20 @@ export class QuestionFlowComponent implements OnInit {
       fromStore.getSectionsFromCurrentContractDetails
     );
 
-    this.store.select(fromStore.getCurrentSection).subscribe(section => {
+    this.currentSection$ = this.store.select(fromStore.getCurrentSection);
+
+    this.currentSection$.subscribe(section => {
       this.currentSection = section;
+      console.log('Subscription', section);
     });
 
-    this.store
-      .select(fromStore.getCurrentQuestionFlow)
-      .subscribe(questionFlow => {
-        this.currentQuestionFlow = questionFlow;
-      });
+    this.currentQuestionFlow$ = this.store.select(
+      fromStore.getCurrentQuestionFlow
+    );
+
+    this.currentQuestionFlow$.subscribe(questionFlow => {
+      this.currentQuestionFlow = questionFlow;
+    });
   }
 
   onQuestionFlowOpen(section: Section) {
@@ -54,11 +61,12 @@ export class QuestionFlowComponent implements OnInit {
   onQuestionFlowFormOpen(questionFlow: QuestionFlow) {
     this.store.dispatch(new fromStore.SetCurrentQuestionFlow(questionFlow));
     this.questionFlow$ = of(questionFlow);
-    console.log(questionFlow);
+    console.log('QuestionFormOpen', questionFlow);
   }
 
   onSetQuestionFlowAnswer(answer: any) {
-    this.store.dispatch(new fromStore.SetAnswer(answer));
+    console.log('Dispatch', this.currentSection);
+    this.store.dispatch(new fromStore.SetAnswer(answer, this.currentSection));
   }
 
   previousQuestion(event) {
@@ -73,6 +81,68 @@ export class QuestionFlowComponent implements OnInit {
       this.questionFlows$.subscribe(questionFlows => {
         allQuestionFlowsFromSection = questionFlows;
       });
+
+      if (this.currentQuestionFlow.parentId === 0) {
+        if (
+          allQuestionFlowsFromSection.find(
+            flow => +flow.path === +this.currentQuestionFlow.path - 1
+          )
+        ) {
+          if (
+            allQuestionFlowsFromSection.find(
+              flow => +flow.path === +this.currentQuestionFlow.path - 1
+            ).questionFlows.length > 0
+          ) {
+            let highestPath = 0;
+            allQuestionFlowsFromSection
+              .find(flow => +flow.path === +this.currentQuestionFlow.path - 1)
+              .questionFlows.forEach(questionFlow => {
+                if (
+                  +allQuestionFlowsFromSection.find(
+                    flow => flow.id === questionFlow
+                  ).path > highestPath
+                ) {
+                  highestPath = +allQuestionFlowsFromSection.find(
+                    flow => flow.id === questionFlow
+                  ).path;
+                }
+              });
+            const nextQuestionFlow = allQuestionFlowsFromSection.find(
+              flow => +flow.path === highestPath
+            );
+            this.onQuestionFlowFormOpen(nextQuestionFlow);
+          } else {
+            const nextQuestionFlow = allQuestionFlowsFromSection.find(
+              flow => +flow.path === +this.currentQuestionFlow.path - 1
+            );
+            this.onQuestionFlowFormOpen(nextQuestionFlow);
+          }
+        } else if (
+          allSectionsFromContractDetails.find(
+            section => section.sequence === this.currentSection.sequence - 1
+          )
+        ) {
+          const nextSection = allSectionsFromContractDetails.find(
+            section => section.sequence === this.currentSection.sequence - 1
+          );
+          this.onQuestionFlowOpen(nextSection);
+
+          let nextQuestionFlow = allQuestionFlowsFromSection[0];
+          allQuestionFlowsFromSection.forEach(questionFlow => {
+            if (+questionFlow.path > +nextQuestionFlow.path) {
+              nextQuestionFlow = questionFlow;
+            }
+          });
+          this.onQuestionFlowFormOpen(nextQuestionFlow);
+        }
+      } else {
+        const nextQuestionFlow = allQuestionFlowsFromSection.find(
+          flow =>
+            (+flow.path).toFixed(2) ===
+            (+this.currentQuestionFlow.path - 0.1).toFixed(2)
+        );
+        this.onQuestionFlowFormOpen(nextQuestionFlow);
+      }
     }
   }
 

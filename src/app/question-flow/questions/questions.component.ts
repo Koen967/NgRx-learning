@@ -17,6 +17,7 @@ import { Section, QuestionFlow } from '../contract-details.model';
 export class QuestionsComponent implements OnInit {
   @Input() questionFlows: QuestionFlow[];
   @Input() parentFlows: QuestionFlow[];
+  @Input() currentQuestionFlow: QuestionFlow;
 
   @Output() questionFlowFormOpen = new EventEmitter<QuestionFlow>();
 

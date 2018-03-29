@@ -1,10 +1,10 @@
 <div class="row border" style="height:85vh">
   <div class="col border" style="overflow:auto">
-    <app-sections [sections]="sections$ | async" (questionFlowsOpen)="onQuestionFlowOpen($event)"></app-sections>
+    <app-sections [sections]="sections$ | async" [currentSection]="currentSection$ | async" (questionFlowsOpen)="onQuestionFlowOpen($event)"></app-sections>
   </div>
   <div class="col border" style="overflow:auto">
-    <app-questions [questionFlows]="questionFlows$ | async" [parentFlows]="parentFlows$ | async" (questionFlowFormOpen)="onQuestionFlowFormOpen($event)"
-      (getChildQuestionFlows)="onGetChildQuestionFlows($event)"></app-questions>
+    <app-questions [questionFlows]="questionFlows$ | async" [parentFlows]="parentFlows$ | async" [currentQuestionFlow]="currentQuestionFlow$ | async"
+      (questionFlowFormOpen)="onQuestionFlowFormOpen($event)" (getChildQuestionFlows)="onGetChildQuestionFlows($event)"></app-questions>
   </div>
   <div class="col border" style="overflow:auto">
     <app-question-form [questionFlow]="questionFlow$ | async" (setQuestionFlowAnswer)="onSetQuestionFlowAnswer($event)"></app-question-form>

@@ -25,10 +25,10 @@ export class QuestionFormComponent implements OnInit {
 
   setAnswer(form: any) {
     const answer = {
-      id: this.questionFlow.id,
+      questionFlow: this.questionFlow,
       answer: form.choice
     };
-    console.log(answer);
+    console.log('Answer', answer);
     /* const newQuestionFlow: QuestionFlow = Object.assign({}, this.questionFlow);
     newQuestionFlow.answer = form.choice; */
     this.setQuestionFlowAnswer.emit(answer);

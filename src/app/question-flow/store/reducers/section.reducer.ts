@@ -38,6 +38,19 @@ export function sectionReducer(
         currentSection: action.section
       };
     }
+    case SectionActions.UPDATE_COMPLETED_QUESTIONS: {
+      console.log('Reducer', action);
+      return {
+        ...state,
+        sections: {
+          ...state.sections,
+          [action.section.id]: {
+            ...state.sections[action.section.id],
+            completedQuestions: action.section.completedQuestions + 1
+          }
+        }
+      };
+    }
     default:
       return state;
   }

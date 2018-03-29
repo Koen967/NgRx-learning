@@ -42,15 +42,16 @@ export function questionFlowReducer(
         currentQuestionFlow: action.questionFlow
       };
     }
+    // Deze actie is op de een of andere manier bugged...
     case QuestionFlowActions.SET_ANSWER: {
       return {
         ...state,
         questionFlows: {
           ...state.questionFlows,
-          [action.answer.id]: {
-            ...state.questionFlows[action.answer.id],
+          [action.answer.questionFlow.id]: {
+            ...state.questionFlows[action.answer.questionFlow.id],
             answer: action.answer.answer,
-            completed: (action.answer = true)
+            completed: true
           }
         }
       };

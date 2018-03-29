@@ -1,5 +1,5 @@
 import { Action } from '@ngrx/store';
-import { QuestionFlow } from '../../contract-details.model';
+import { QuestionFlow, Section } from '../../contract-details.model';
 
 export const GET_QUESTION_FLOW = '[QUESTION_FLOW] GET QUESTION_FLOW';
 export const GET_QUESTION_FLOW_SUCCES =
@@ -37,7 +37,7 @@ export class SetCurrentQuestionFlow implements Action {
 export class SetAnswer implements Action {
   readonly type = SET_ANSWER;
 
-  constructor(public answer: any) {}
+  constructor(public answer: any, public section: Section) {}
 }
 
 export type QuestionFlowActionsAll =
