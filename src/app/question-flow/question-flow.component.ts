@@ -91,7 +91,10 @@ export class QuestionFlowComponent implements OnInit {
           if (
             allQuestionFlowsFromSection.find(
               flow => +flow.path === +this.currentQuestionFlow.path - 1
-            ).questionFlows.length > 0
+            ).questionFlows.length > 0 &&
+            allQuestionFlowsFromSection.find(
+              flow => +flow.path === +this.currentQuestionFlow.path - 1
+            ).showSubQuestionOn === 'true'
           ) {
             let highestPath = 0;
             allQuestionFlowsFromSection
@@ -160,7 +163,10 @@ export class QuestionFlowComponent implements OnInit {
       });
 
       // Set current to first child
-      if (this.currentQuestionFlow.questionFlows.length > 0) {
+      if (
+        this.currentQuestionFlow.questionFlows.length > 0 &&
+        this.currentQuestionFlow.showSubQuestionOn === 'true'
+      ) {
         const nextQuestionFlow = allQuestionFlowsFromSection.find(
           flow => flow.path === this.currentQuestionFlow.path.concat('.1')
         );

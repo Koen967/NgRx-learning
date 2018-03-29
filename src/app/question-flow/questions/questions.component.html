@@ -13,8 +13,8 @@
         </div>
       </div>
       <!-- Need to get the questionFlows to display -->
-      <app-questions *ngIf="questionFlow.questionFlows.length > 0" [questionFlows]="questionFlows" [parentFlows]="childQuestionFlows(questionFlow)"
-        [currentQuestionFlow]="currentQuestionFlow" (questionFlowFormOpen)="openQuestionFlowForm($event)"></app-questions>
+      <app-questions *ngIf="questionFlow.questionFlows.length > 0 && questionFlow.showSubQuestionOn === 'true'" [questionFlows]="questionFlows"
+        [parentFlows]="childQuestionFlows(questionFlow)" [currentQuestionFlow]="currentQuestionFlow" (questionFlowFormOpen)="openQuestionFlowForm($event)"></app-questions>
     </li>
   </ol>
 </div>
