@@ -48,6 +48,10 @@ export function sectionReducer(
             ...state.sections[action.section.id],
             completedQuestions: action.section.completedQuestions + 1
           }
+        },
+        currentSection: {
+          ...action.section,
+          completedQuestions: action.section.completedQuestions + 1
         }
       };
     }

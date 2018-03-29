@@ -1,6 +1,6 @@
 <div>
   <ol>
-    <li *ngFor="let questionFlow of parentFlows" [ngClass]="{'active': currentQuestionFlow == questionFlow}" class="list-group-item"
+    <li *ngFor="let questionFlow of parentFlows" [ngClass]="{'active': currentQuestionFlow.id == questionFlow.id}" class="list-group-item"
       (click)="$event.stopPropagation();openQuestionFlowForm(questionFlow)">
       <div *ngIf="questionFlow.completed == true" class="row alert alert-success">
         <div class="col">
@@ -13,7 +13,7 @@
         </div>
       </div>
       <!-- Need to get the questionFlows to display -->
-      <app-questions *ngIf="questionFlow.questionFlows.length > 0 && questionFlow.showSubQuestionOn === 'true'" [questionFlows]="questionFlows"
+      <app-questions *ngIf="questionFlow.questionFlows.length > 0 && questionFlow.showSubQuestionOn === questionFlow.answer" [questionFlows]="questionFlows"
         [parentFlows]="childQuestionFlows(questionFlow)" [currentQuestionFlow]="currentQuestionFlow" (questionFlowFormOpen)="openQuestionFlowForm($event)"></app-questions>
     </li>
   </ol>

@@ -18,6 +18,13 @@ export const getQuestionFlows = createSelector(
   fromQuestionFlows.getQuestionFlows
 );
 
+export const getQuestionFlowsArray = createSelector(
+  getQuestionFlows,
+  questionFlows => {
+    return Object.keys(questionFlows).map(id => questionFlows[id]);
+  }
+);
+
 export const getCurrentQuestionFlow = createSelector(
   getQuestionFlowsState,
   fromQuestionFlows.getCurrentQuestionFlow

@@ -3,7 +3,7 @@
     <app-sections [sections]="sections$ | async" [currentSection]="currentSection$ | async" (questionFlowsOpen)="onQuestionFlowOpen($event)"></app-sections>
   </div>
   <div class="col border" style="overflow:auto">
-    <app-questions [questionFlows]="questionFlows$ | async" [parentFlows]="parentFlows$ | async" [currentQuestionFlow]="currentQuestionFlow$ | async"
+    <app-questions [questionFlows]="sectionQuestionFlows$ | async" [parentFlows]="parentFlows$ | async" [currentQuestionFlow]="currentQuestionFlow$ | async"
       (questionFlowFormOpen)="onQuestionFlowFormOpen($event)" (getChildQuestionFlows)="onGetChildQuestionFlows($event)"></app-questions>
   </div>
   <div class="col border" style="overflow:auto">

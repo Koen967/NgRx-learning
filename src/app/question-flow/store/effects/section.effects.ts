@@ -13,4 +13,15 @@ export class SectionEffects {
     private actions$: Actions,
     private questionFlowService: fromServices.QuestionFlowService
   ) {}
+
+  /* @Effect()
+  setAnswer$: Observable<StateActions.SectionActionsAll> = this.actions$
+    .ofType<StateActions.UpdateCompletedQuestions>(
+      StateActions.UPDATE_COMPLETED_QUESTIONS
+    )
+    .pipe(
+      switchMap(payload => {
+        return of(new StateActions.SetCurrentSection(payload.section));
+      })
+    ); */
 }
