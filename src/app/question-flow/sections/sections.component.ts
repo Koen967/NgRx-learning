@@ -16,7 +16,6 @@ import { Section, ContractDetail } from '../contract-details.model';
 })
 export class SectionsComponent implements OnInit {
   @Input() sections: Section[];
-  // Use current to show selected Section
   @Input() currentSection: Section;
 
   @Output() questionFlowsOpen = new EventEmitter<Section>();

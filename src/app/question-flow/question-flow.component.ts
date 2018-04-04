@@ -53,6 +53,28 @@ export class QuestionFlowComponent implements OnInit {
     this.setInitialSelection();
   }
 
+  setInitialSelection() {
+    if (!this.currentSection) {
+      let section: Section;
+      this.sections$.subscribe(sections => {
+        section = sections[0];
+      });
+      this.onQuestionFlowOpen(section);
+    } else {
+      this.onQuestionFlowOpen(this.currentSection);
+    }
+    if (!this.currentQuestionFlow) {
+      let questionFlow: QuestionFlow;
+      this.sectionQuestionFlows$.subscribe(questionFlows => {
+        questionFlow = questionFlows[0];
+      });
+      this.onQuestionFlowFormOpen(questionFlow);
+    } else {
+      this.onQuestionFlowFormOpen(this.currentQuestionFlow);
+    }
+  }
+
+  //#region Caught methods
   onQuestionFlowOpen(section: Section) {
     this.store.dispatch(new fromStore.SetCurrentSection(section));
     this.sectionQuestionFlows$ = this.store.select(
@@ -78,7 +100,9 @@ export class QuestionFlowComponent implements OnInit {
       )
     );
   }
+  //#endregion Caught methods
 
+  //#region Button events
   previousQuestion(event) {
     let allSectionsFromContractDetails: Section[];
     let allQuestionFlowsFromSection: QuestionFlow[];
@@ -252,25 +276,5 @@ export class QuestionFlowComponent implements OnInit {
       this.onQuestionFlowFormOpen(allQuestionFlowsFromSection[0]);
     }
   }
-
-  setInitialSelection() {
-    if (!this.currentSection) {
-      let section: Section;
-      this.sections$.subscribe(sections => {
-        section = sections[0];
-      });
-      this.onQuestionFlowOpen(section);
-    } else {
-      this.onQuestionFlowOpen(this.currentSection);
-    }
-    if (!this.currentQuestionFlow) {
-      let questionFlow: QuestionFlow;
-      this.sectionQuestionFlows$.subscribe(questionFlows => {
-        questionFlow = questionFlows[0];
-      });
-      this.onQuestionFlowFormOpen(questionFlow);
-    } else {
-      this.onQuestionFlowFormOpen(this.currentQuestionFlow);
-    }
-  }
+  //#endregion Button events
 }

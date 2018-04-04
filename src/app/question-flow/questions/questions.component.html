@@ -12,7 +12,6 @@
           <p>{{questionFlow.question}}</p>
         </div>
       </div>
-      <!-- Need to get the questionFlows to display -->
       <app-questions *ngIf="questionFlow.questionFlows.length > 0 && questionFlow.showSubQuestionOn === questionFlow.answer" [questionFlows]="questionFlows"
         [parentFlows]="childQuestionFlows(questionFlow)" [currentQuestionFlow]="currentQuestionFlow" (questionFlowFormOpen)="openQuestionFlowForm($event)"></app-questions>
     </li>
