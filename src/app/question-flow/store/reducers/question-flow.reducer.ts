@@ -8,7 +8,7 @@ import {
 import { normalize } from 'normalizr';
 
 export interface QuestionFlowState {
-  questionFlows: { [key: string]: QuestionFlow };
+  questionFlows: { [key: number]: QuestionFlow };
   currentQuestionFlow: QuestionFlow;
   childQuestionFlows: number[];
 }
@@ -42,7 +42,6 @@ export function questionFlowReducer(
         currentQuestionFlow: action.questionFlow
       };
     }
-    // Deze actie is op de een of andere manier bugged...
     case QuestionFlowActions.SET_ANSWER: {
       return {
         ...state,
@@ -53,6 +52,11 @@ export function questionFlowReducer(
             answer: action.answer.answer,
             completed: true
           }
+        },
+        currentQuestionFlow: {
+          ...state.currentQuestionFlow,
+          answer: action.answer.answer,
+          completed: true
         }
       };
     }

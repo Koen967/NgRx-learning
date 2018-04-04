@@ -28,9 +28,6 @@ export class QuestionFormComponent implements OnInit {
       questionFlow: this.questionFlow,
       answer: form.choice
     };
-    console.log('Answer', answer);
-    /* const newQuestionFlow: QuestionFlow = Object.assign({}, this.questionFlow);
-    newQuestionFlow.answer = form.choice; */
     this.setQuestionFlowAnswer.emit(answer);
   }
 }

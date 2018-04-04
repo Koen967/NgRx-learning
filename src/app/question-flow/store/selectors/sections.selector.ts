@@ -4,8 +4,13 @@ import * as fromFeature from '../reducers';
 import * as fromSections from '../reducers/section.reducer';
 
 import * as fromContractDetails from './contract-details.selector';
-import { normalize } from 'normalizr';
-import { contractDetailsSchema, Section } from '../../contract-details.model';
+import { denormalize, schema } from 'normalizr';
+import {
+  sectionsSchema,
+  Section,
+  contractDetailsSchema
+} from '../../contract-details.model';
+import { getQuestionFlows } from '../reducers/question-flow.reducer';
 
 export const getSectionsState = createSelector(
   fromFeature.getContractDetailsAppState,
@@ -22,8 +27,8 @@ export const getSectionsFromCurrentContractDetails = createSelector(
   getSections,
   (contractDetails, sections) => {
     const arr: Section[] = [];
-    contractDetails.sections.forEach((sectionId: number) => {
-      arr.push(sections[sectionId]);
+    contractDetails.sections.forEach(section => {
+      arr.push(sections[section.toString()]);
     });
     return arr;
   }

@@ -35,8 +35,8 @@ export const getQuestionFlowsFromQuestionFlow = createSelector(
   getQuestionFlows,
   (questionFlow, questionFlows) => {
     const arr: QuestionFlow[] = [];
-    questionFlow.questionFlows.forEach((questionFlowId: number) => {
-      arr.push(questionFlows[questionFlowId]);
+    questionFlow.questionFlows.forEach(questionFlow => {
+      arr.push(questionFlows[+questionFlow]);
     });
     return arr;
   }
@@ -47,12 +47,12 @@ export const getQuestionFlowsFromSection = createSelector(
   getQuestionFlows,
   (section, questionFlows) => {
     const arr: QuestionFlow[] = [];
-    section.questionFlows.forEach((questionFlowId: number) => {
-      arr.push(questionFlows[questionFlowId]);
+    section.questionFlows.forEach(questionFlow => {
+      arr.push(questionFlows[+questionFlow]);
     });
     arr.forEach(questionFlow => {
       questionFlow.questionFlows.forEach(child => {
-        arr.push(questionFlows[child]);
+        arr.push(questionFlows[+child]);
       });
     });
     return arr;
@@ -64,8 +64,8 @@ export const getParentFlowsFromSection = createSelector(
   getQuestionFlows,
   (section, questionFlows) => {
     const arr: QuestionFlow[] = [];
-    section.questionFlows.forEach((questionFlowId: number) => {
-      arr.push(questionFlows[questionFlowId]);
+    section.questionFlows.forEach(questionFlow => {
+      arr.push(questionFlows[+questionFlow]);
     });
     return arr;
   }

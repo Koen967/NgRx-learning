@@ -7,7 +7,7 @@
       (questionFlowFormOpen)="onQuestionFlowFormOpen($event)" (getChildQuestionFlows)="onGetChildQuestionFlows($event)"></app-questions>
   </div>
   <div class="col border" style="overflow:auto">
-    <app-question-form [questionFlow]="questionFlow$ | async" (setQuestionFlowAnswer)="onSetQuestionFlowAnswer($event)"></app-question-form>
+    <app-question-form [questionFlow]="currentQuestionFlow$ | async" (setQuestionFlowAnswer)="onSetQuestionFlowAnswer($event)"></app-question-form>
   </div>
 </div>
 <button type="button" class="btn btn-primary" (click)="previousQuestion($event)">Previous question</button>

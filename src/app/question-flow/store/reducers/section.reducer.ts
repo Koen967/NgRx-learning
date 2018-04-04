@@ -4,9 +4,9 @@ import { Section, contractDetailsSchema } from '../../contract-details.model';
 import { normalize } from 'normalizr';
 
 export interface SectionState {
-  sections: { [key: string]: Section };
+  sections: { [key: number]: Section };
   currentSection: Section;
-  questionFlows: string[];
+  questionFlows: number[];
 }
 
 export const sectionInitialState: SectionState = {
@@ -39,19 +39,20 @@ export function sectionReducer(
       };
     }
     case SectionActions.UPDATE_COMPLETED_QUESTIONS: {
-      console.log('Reducer', action);
       return {
         ...state,
         sections: {
           ...state.sections,
           [action.section.id]: {
             ...state.sections[action.section.id],
-            completedQuestions: action.section.completedQuestions + 1
+            totalQuestions: action.total,
+            completedQuestions: action.completed
           }
         },
         currentSection: {
           ...action.section,
-          completedQuestions: action.section.completedQuestions + 1
+          totalQuestions: action.total,
+          completedQuestions: action.completed
         }
       };
     }

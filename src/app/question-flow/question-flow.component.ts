@@ -21,7 +21,6 @@ export class QuestionFlowComponent implements OnInit {
   questionFlows$: Observable<QuestionFlow[]>;
   sectionQuestionFlows$: Observable<QuestionFlow[]>;
   parentFlows$: Observable<QuestionFlow[]>;
-  questionFlow$: Observable<QuestionFlow>;
   currentSection$: Observable<Section>;
   currentQuestionFlow$: Observable<QuestionFlow>;
 
@@ -41,7 +40,6 @@ export class QuestionFlowComponent implements OnInit {
 
     this.currentSection$.subscribe(section => {
       this.currentSection = section;
-      console.log('Subscription', section);
     });
 
     this.currentQuestionFlow$ = this.store.select(
@@ -56,7 +54,6 @@ export class QuestionFlowComponent implements OnInit {
   }
 
   onQuestionFlowOpen(section: Section) {
-    console.log('OpenFlow', section);
     this.store.dispatch(new fromStore.SetCurrentSection(section));
     this.sectionQuestionFlows$ = this.store.select(
       fromStore.getQuestionFlowsFromSection
@@ -66,13 +63,20 @@ export class QuestionFlowComponent implements OnInit {
 
   onQuestionFlowFormOpen(questionFlow: QuestionFlow) {
     this.store.dispatch(new fromStore.SetCurrentQuestionFlow(questionFlow));
-    this.questionFlow$ = of(questionFlow);
-    console.log('QuestionFormOpen', questionFlow);
   }
 
   onSetQuestionFlowAnswer(answer: any) {
-    console.log('Dispatch', this.currentSection$);
-    this.store.dispatch(new fromStore.SetAnswer(answer, this.currentSection));
+    let allQuestionFlowsFromSection: QuestionFlow[];
+    this.sectionQuestionFlows$.subscribe(questionFlows => {
+      allQuestionFlowsFromSection = questionFlows;
+    });
+    this.store.dispatch(
+      new fromStore.SetAnswer(
+        answer,
+        this.currentSection,
+        allQuestionFlowsFromSection
+      )
+    );
   }
 
   previousQuestion(event) {
@@ -108,11 +112,11 @@ export class QuestionFlowComponent implements OnInit {
             .questionFlows.forEach(questionFlow => {
               if (
                 +allQuestionFlowsFromSection.find(
-                  flow => flow.id === questionFlow
+                  flow => flow.id === +questionFlow
                 ).path > highestPath
               ) {
                 highestPath = +allQuestionFlowsFromSection.find(
-                  flow => flow.id === questionFlow
+                  flow => flow.id === +questionFlow
                 ).path;
               }
             });
@@ -136,12 +140,22 @@ export class QuestionFlowComponent implements OnInit {
         );
         this.onQuestionFlowOpen(nextSection);
 
-        let nextQuestionFlow = allQuestionFlowsFromSection[0];
-        allQuestionFlowsFromSection.forEach(questionFlow => {
-          if (+questionFlow.path > +nextQuestionFlow.path) {
-            nextQuestionFlow = questionFlow;
+        let nextQuestionFlow =
+          allQuestionFlowsFromSection[allQuestionFlowsFromSection.length - 1];
+        if (nextQuestionFlow.parentId !== 0) {
+          const parentFlow = allQuestionFlowsFromSection.find(
+            flow => flow.id === nextQuestionFlow.parentId
+          );
+          if (parentFlow.showSubQuestionOn === parentFlow.answer) {
+            allQuestionFlowsFromSection.forEach(questionFlow => {
+              if (+questionFlow.path > +nextQuestionFlow.path) {
+                nextQuestionFlow = questionFlow;
+              }
+            });
+          } else {
+            nextQuestionFlow = parentFlow;
           }
-        });
+        }
         this.onQuestionFlowFormOpen(nextQuestionFlow);
       }
     } else {
@@ -194,15 +208,13 @@ export class QuestionFlowComponent implements OnInit {
     } else if (
       this.currentQuestionFlow.parentId === 0 &&
       allQuestionFlowsFromSection.find(
-        flow =>
-          flow.sequenceNumber === this.currentQuestionFlow.sequenceNumber + 1
+        flow => +flow.path === +this.currentQuestionFlow.path + 1
       )
     ) {
       const nextQuestionFlow =
         this.currentQuestionFlow.parentId === 0 &&
         allQuestionFlowsFromSection.find(
-          flow =>
-            flow.sequenceNumber === this.currentQuestionFlow.sequenceNumber + 1
+          flow => +flow.path === +this.currentQuestionFlow.path + 1
         );
       this.onQuestionFlowFormOpen(nextQuestionFlow);
     } else if (
@@ -228,7 +240,11 @@ export class QuestionFlowComponent implements OnInit {
         );
       this.onQuestionFlowFormOpen(nextQuestionFlow);
       // Set next current section
-    } else {
+    } else if (
+      allSectionsFromContractDetails.find(
+        section => section.sequence === this.currentSection.sequence + 1
+      )
+    ) {
       const nextSection = allSectionsFromContractDetails.find(
         section => section.sequence === this.currentSection.sequence + 1
       );

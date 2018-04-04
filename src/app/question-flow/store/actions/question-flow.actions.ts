@@ -37,7 +37,11 @@ export class SetCurrentQuestionFlow implements Action {
 export class SetAnswer implements Action {
   readonly type = SET_ANSWER;
 
-  constructor(public answer: any, public section: Section) {}
+  constructor(
+    public answer: any,
+    public section: Section,
+    public questionFlows: QuestionFlow[]
+  ) {}
 }
 
 export type QuestionFlowActionsAll =

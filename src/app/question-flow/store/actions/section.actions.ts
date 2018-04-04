@@ -35,7 +35,15 @@ export class SetCurrentSection implements Action {
 export class UpdateCompletedQuestions implements Action {
   readonly type = UPDATE_COMPLETED_QUESTIONS;
 
-  constructor(public section: Section) {}
+  constructor(
+    public section: Section,
+    public completed: number,
+    public total: number
+  ) {}
+}
+
+export class DoNothing implements Action {
+  readonly type = '[NULL] DO NOTHING';
 }
 
 export type SectionActionsAll =
@@ -43,4 +51,5 @@ export type SectionActionsAll =
   | GetSectionsSucces
   | GetSectionsFailed
   | SetCurrentSection
-  | UpdateCompletedQuestions;
+  | UpdateCompletedQuestions
+  | DoNothing;

@@ -8,7 +8,7 @@ import { normalize } from 'normalizr';
 
 export interface ContractDetailState {
   contractDetails: { [id: number]: ContractDetail };
-  sections: string[];
+  sections: number[];
   loaded: boolean;
   loading: boolean;
 }

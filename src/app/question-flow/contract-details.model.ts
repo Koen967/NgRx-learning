@@ -10,7 +10,7 @@ export class ContractDetail {
   defaultCurrencyId: number;
   totalQuestions: number;
   completedQuestions: number;
-  sections: number[];
+  sections: Section[];
   parentSections: ParentSection[];
   revisions: Revision[];
 }
@@ -23,7 +23,7 @@ export class Section {
   totalQuestions: number;
   completedQuestions: number;
   selected: boolean;
-  questionFlows: number[];
+  questionFlows: QuestionFlow[];
 }
 
 export class QuestionFlow {
@@ -49,7 +49,7 @@ export class QuestionFlow {
   companyDefaultCurrency: any;
   dropdownValues: any;
   unitOfMeasurement: string;
-  questionFlows: number[];
+  questionFlows: QuestionFlow[];
   exceptions: Exception[];
   useCompanyDefault: boolean;
   reviewedReason: any;
@@ -104,7 +104,7 @@ const sectionSchema = new schema.Entity('sections', {
   questionFlows: questionFlowsSchema
 });
 
-const sectionsSchema = new schema.Array(sectionSchema);
+export const sectionsSchema = new schema.Array(sectionSchema);
 
 export const contractDetailsSchema = new schema.Entity('contractDetails', {
   sections: sectionsSchema
