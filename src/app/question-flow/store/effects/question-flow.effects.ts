@@ -50,7 +50,7 @@ export class QuestionFlowEffects {
         if (!payload.answer.questionFlow.completed) {
           completedQuestions++;
         }
-        if (payload.answer.questionFlow.questionFlows.lenght > 0) {
+        if (payload.answer.questionFlow.questionFlows.length > 0) {
           if (
             payload.answer.questionFlow.showSubQuestionOn ===
               payload.answer.answer &&
