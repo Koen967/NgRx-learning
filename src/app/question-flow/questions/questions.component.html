@@ -1,0 +1,19 @@
+<div>
+  <ol>
+    <li *ngFor="let questionFlow of parentFlows" [ngClass]="{'active': currentQuestionFlow.id == questionFlow.id}" class="list-group-item"
+      (click)="$event.stopPropagation();openQuestionFlowForm(questionFlow)">
+      <div *ngIf="questionFlow.completed == true" class="row alert alert-success">
+        <div class="col">
+          <p>{{questionFlow.question}}</p>
+        </div>
+      </div>
+      <div *ngIf="questionFlow.completed == false" class="row alert alert-danger">
+        <div class="col">
+          <p>{{questionFlow.question}}</p>
+        </div>
+      </div>
+      <app-questions *ngIf="questionFlow.questionFlows.length > 0 && questionFlow.showSubQuestionOn === questionFlow.answer" [questionFlows]="questionFlows"
+        [parentFlows]="childQuestionFlows(questionFlow)" [currentQuestionFlow]="currentQuestionFlow" (questionFlowFormOpen)="openQuestionFlowForm($event)"></app-questions>
+    </li>
+  </ol>
+</div>
